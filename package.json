@@ -1,1 +1,20 @@
-
+{
+  "name": "vilkas",
+  "version": "1.0.0",
+  "description": "Paprastas Discord botas",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.24.2",
+    "dotenv": "^17.2.3"
+  }
+}
