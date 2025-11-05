@@ -55,7 +55,7 @@ module.exports = {
       allowedMentions: { parse: [] },
     });
 
-    if (!ephemeral && timeoutMs > 0) {
+    if (timeoutMs > 0) {
       setTimeout(() => deleteReplySafe(interaction), timeoutMs);
     }
   },

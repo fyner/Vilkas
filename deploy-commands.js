@@ -46,22 +46,18 @@ const rest = new REST({ version: '10' }).setToken(token);
 (async () => {
   try {
     const isGuildTargeted = guildId && !guildId.startsWith('PAKEISKITE') && guildId.length > 0;
-    const guildRoute = Routes.applicationGuildCommands(clientId, guildId);
+    const guildRoute = isGuildTargeted ? Routes.applicationGuildCommands(clientId, guildId) : null;
     const globalRoute = Routes.applicationCommands(clientId);
 
-    console.log(`🔄 Registruojamos ${commands.length} komandos${isGuildTargeted ? ' (gildijoje ir globaliai)' : ' (globaliai)'}...`);
-
     if (isGuildTargeted) {
-      // 1) Atnaujinti gildijos komandas (greita)
+      console.log(`🔄 Registruojamos ${commands.length} komandos (tik gildijoje: ${guildId})...`);
       await rest.put(guildRoute, { body: commands });
-      // 2) Atnaujinti globalias komandas (pašalina senus apibrėžimus, pvz., senas subkomandas)
-      await rest.put(globalRoute, { body: commands });
+      console.log('✅ Gildijos komandų registracija baigta.');
     } else {
-      // Tik globaliai
+      console.log(`🔄 Registruojamos ${commands.length} komandos (globaliai)...`);
       await rest.put(globalRoute, { body: commands });
+      console.log('✅ Globali registracija baigta. Globalių komandų atnaujinimas gali užtrukti iki 1 valandos.');
     }
-
-    console.log('✅ Registracija baigta. Globalių komandų atnaujinimas gali užtrukti iki 1 valandos.');
   } catch (error) {
     console.error('❌ Klaida registruojant komandas:', error);
     process.exit(1);

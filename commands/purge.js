@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags, ChannelType } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeDefer, safeReply, deleteReplySafe } = require('../utils/responses');
-const { hasBotPerm, PermissionFlagsBits: PermBits } = require('../utils/permissions');
+const { hasBotPerm } = require('../utils/permissions');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -41,7 +41,7 @@ module.exports = {
 
     // Boto leidimų patikra
     const botId = interaction.client.user.id;
-    if (!hasBotPerm(interaction.channel, botId, PermBits.ManageMessages)) {
+    if (!hasBotPerm(interaction.channel, botId, PermissionFlagsBits.ManageMessages)) {
       await safeReply(interaction, '❌ Trūksta leidimo „Manage Messages“.', replyInit);
       return;
     }
@@ -68,8 +68,8 @@ module.exports = {
           : `🧹 Ištrinta žinučių: ${deleted.size}.`;
         await safeReply(interaction, msg, replyInit);
 
-        // Jei nefemeral – taikome bendrą timeout iš config
-        if (!useEphemeral && timeoutMs > 0) {
+        // Taikome timeout iš config (veikia ir ephemeral, ir non-ephemeral)
+        if (timeoutMs > 0) {
           setTimeout(() => {
             deleteReplySafe(interaction);
           }, timeoutMs);
@@ -134,7 +134,8 @@ module.exports = {
           : `🧹 Ištrinta žinučių: ${totalDeleted}.`;
         await safeReply(interaction, msg, replyInit);
 
-        if (!useEphemeral && timeoutMs > 0) {
+        // Taikome timeout iš config (veikia ir ephemeral, ir non-ephemeral)
+        if (timeoutMs > 0) {
           setTimeout(() => {
             deleteReplySafe(interaction);
           }, timeoutMs);

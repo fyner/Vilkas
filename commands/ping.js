@@ -9,13 +9,19 @@ module.exports = {
   async execute(interaction) {
     const { ephemeral, timeoutMs } = getCommandSettings('ping');
     const start = Date.now();
-    await safeDefer(interaction, ephemeral ? { flags: MessageFlags.Ephemeral } : undefined);
+    
+    // Defer tik jei ephemeral, kad galėtume ištrinti po timeout
+    if (ephemeral) {
+      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+    }
+    
     const elapsed = Date.now() - start;
     const heartbeat = interaction.client.ws.ping;
 
     await safeReply(interaction, `🏓 Pong! Komandos apdorojimas: ${elapsed}ms, WebSocket ping: ${heartbeat}ms.`);
 
-    if (!ephemeral && timeoutMs > 0) {
+    // Taikome timeout iš config (veikia ir ephemeral, ir non-ephemeral)
+    if (timeoutMs > 0) {
       setTimeout(() => { deleteReplySafe(interaction); }, timeoutMs);
     }
   },

@@ -1,10 +1,12 @@
 {
   "commands": {
-    "ping": { "ephemeral": true, "timeoutSeconds": 3 },
+    "ping": { "ephemeral": true, "timeoutSeconds": 5 },
     "echo": { "ephemeral": false, "timeoutSeconds": 0 },
-    "purge": { "ephemeral": true, "timeoutSeconds": 10 },
-    "serverinfo": { "ephemeral": true, "timeoutSeconds": 3 },
-    "userinfo": { "ephemeral": true, "timeoutSeconds": 3 },
-    "roleinfo": { "ephemeral": true, "timeoutSeconds": 3 }
-  }
+    "purge": { "ephemeral": true, "timeoutSeconds": 5 },
+    "serverinfo": { "ephemeral": false, "timeoutSeconds": 5 },
+    "userinfo": { "ephemeral": false, "timeoutSeconds": 5 },
+    "roleinfo": { "ephemeral": false, "timeoutSeconds": 0 },
+    "help": { "ephemeral": false, "timeoutSeconds": 0 }
+  },
+  "exportPath": "./export"
 }
