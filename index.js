@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
 require('dotenv').config();
 
 const config = require('./config.json');
@@ -12,7 +12,7 @@ if (!token || token.startsWith('PAKEISKITE')) {
   process.exit(1);
 }
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers] });
 
 client.commands = new Collection();
 
@@ -53,16 +53,27 @@ client.on(Events.InteractionCreate, async (interaction) => {
   } catch (error) {
     console.error(`💥 Klaida vykdant komandą ${interaction.commandName}:`, error);
 
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({
-        content: 'Įvyko klaida vykdant komandą. Bandykite dar kartą vėliau.',
-        ephemeral: true,
-      });
-    } else {
-      await interaction.reply({
-        content: 'Įvyko klaida vykdant komandą. Bandykite dar kartą vėliau.',
-        ephemeral: true,
-      });
+    // Saugus atsakymas klaidos atveju: necrash'inti, jei webhook/žinutė jau nebegaliojanti
+    try {
+      if (interaction.replied) {
+        await interaction.followUp({
+          content: 'Įvyko klaida vykdant komandą. Bandykite dar kartą vėliau.',
+          flags: MessageFlags.Ephemeral,
+        });
+      } else if (interaction.deferred) {
+        // Jei „deferred“, bandome užbaigti su editReply
+        await interaction.editReply({
+          content: 'Įvyko klaida vykdant komandą. Bandykite dar kartą vėliau.',
+        });
+      } else {
+        await interaction.reply({
+          content: 'Įvyko klaida vykdant komandą. Bandykite dar kartą vėliau.',
+          flags: MessageFlags.Ephemeral,
+        });
+      }
+    } catch (respondError) {
+      // Nutylime žinomus atvejus (pvz., Unknown Message, pasibaigęs interaction token)
+      console.warn('Nepavyko išsiųsti klaidos atsakymo:', respondError?.code || respondError?.message || respondError);
     }
   }
 });

@@ -1,5 +1,10 @@
 {
-  "token": "PAKEISKITE_SU_SAVO_BOTO_TOKENU",
-  "clientId": "PAKEISKITE_SU_SAVO_PROGRAMES_CLIENT_ID",
-  "guildId": "PAKEISKITE_SU_TESTINIO_SERVERIO_ID"
+  "commands": {
+    "ping": { "ephemeral": true, "timeoutSeconds": 3 },
+    "echo": { "ephemeral": false, "timeoutSeconds": 0 },
+    "purge": { "ephemeral": true, "timeoutSeconds": 10 },
+    "serverinfo": { "ephemeral": true, "timeoutSeconds": 3 },
+    "userinfo": { "ephemeral": true, "timeoutSeconds": 3 },
+    "roleinfo": { "ephemeral": true, "timeoutSeconds": 3 }
+  }
 }
