@@ -9,4 +9,13 @@
     "help": { "ephemeral": false, "timeoutSeconds": 0 }
   },
   "exportPath": "./export"
+  ,
+  "rules": {
+    "roleId": "1435218176634912881",
+    "kickOnReject": true,
+    "buttons": {
+      "acceptLabel": "OK",
+      "rejectLabel": "No"
+    }
+  }
 }

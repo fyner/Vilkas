@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeDefer, safeReply, deleteReplySafe } = require('../utils/responses');
 
@@ -12,7 +12,7 @@ module.exports = {
     
     // Defer tik jei ephemeral, kad galėtume ištrinti po timeout
     if (ephemeral) {
-      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+      await safeDefer(interaction, { ephemeral: true });
     }
     
     const elapsed = Date.now() - start;

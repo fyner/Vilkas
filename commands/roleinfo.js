@@ -12,7 +12,7 @@ module.exports = {
     const { ephemeral, timeoutMs } = getCommandSettings('roleinfo');
     
     if (ephemeral) {
-      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+      await safeDefer(interaction, { ephemeral: true });
     } else {
       await safeDefer(interaction);
     }
@@ -59,7 +59,8 @@ module.exports = {
           ? `✅ HTML failas sugeneruotas. Paspaudę ant failo galite jį atsisiųsti.`
           : `✅ HTML failas sugeneruotas. Paspaudę ant failo galite jį atsisiųsti.`,
         files: [attachment],
-        flags: MessageFlags.SuppressEmbeds | (ephemeral ? MessageFlags.Ephemeral : 0),
+        flags: MessageFlags.SuppressEmbeds,
+        ...(ephemeral ? { ephemeral: true } : {}),
       });
 
       if (timeoutMs > 0 && !ephemeral) {

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeReply, safeDefer, deleteReplySafe } = require('../utils/responses');
 
@@ -15,7 +15,7 @@ module.exports = {
   async execute(interaction) {
     const { ephemeral, timeoutMs } = getCommandSettings('userinfo');
     if (ephemeral) {
-      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+      await safeDefer(interaction, { ephemeral: true });
     }
 
     const user = interaction.options.getUser('vartotojas') || interaction.user;
@@ -52,7 +52,7 @@ module.exports = {
 
     await safeReply(interaction, {
       embeds: [embed],
-      ...(ephemeral ? { flags: MessageFlags.Ephemeral } : {}),
+      ...(ephemeral ? { ephemeral: true } : {}),
       allowedMentions: { parse: [] },
     });
 

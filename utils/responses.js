@@ -1,14 +1,29 @@
+const { MessageFlags } = require('discord.js');
+
+function normalizeEphemeral(init) {
+  if (!init) return init;
+  const options = { ...init };
+  if (options.ephemeral) {
+    const current = typeof options.flags === 'number' ? options.flags : 0;
+    options.flags = current | MessageFlags.Ephemeral;
+    delete options.ephemeral;
+  }
+  return options;
+}
+
 async function safeDefer(interaction, replyInit) {
   try {
+    const normalized = normalizeEphemeral(replyInit);
     if (!interaction.deferred && !interaction.replied) {
-      await interaction.deferReply(replyInit);
+      await interaction.deferReply(normalized);
     }
   } catch (_) {}
 }
 
 async function safeReply(interaction, contentOrOptions, replyInit) {
   try {
-    const options = typeof contentOrOptions === 'string' ? { content: contentOrOptions, ...(replyInit || {}) } : contentOrOptions;
+    const base = typeof contentOrOptions === 'string' ? { content: contentOrOptions, ...(replyInit || {}) } : contentOrOptions;
+    const options = normalizeEphemeral(base);
     if (interaction.replied) {
       return await interaction.followUp(options);
     }

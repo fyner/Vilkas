@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeReply, safeDefer, deleteReplySafe } = require('../utils/responses');
 
@@ -11,7 +11,7 @@ module.exports = {
     const { ephemeral, timeoutMs } = getCommandSettings('help');
     
     if (ephemeral) {
-      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+      await safeDefer(interaction, { ephemeral: true });
     }
 
     // Detalus aprašymas visoms komandoms (išskyrus help)
@@ -112,7 +112,7 @@ module.exports = {
 
     await safeReply(interaction, {
       embeds: [embed],
-      ...(ephemeral ? { flags: MessageFlags.Ephemeral } : {}),
+      ...(ephemeral ? { ephemeral: true } : {}),
       allowedMentions: { parse: [] },
     });
 

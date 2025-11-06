@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags, EmbedBuilder, ChannelType } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeReply, safeDefer, deleteReplySafe } = require('../utils/responses');
 
@@ -12,7 +12,7 @@ module.exports = {
 
     // Defer jei ephemeral, kad neprarastume atsakymo laiko
     if (ephemeral) {
-      await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+      await safeDefer(interaction, { ephemeral: true });
     }
 
     const guild = interaction.guild;
@@ -51,7 +51,7 @@ module.exports = {
 
     await safeReply(interaction, {
       embeds: [embed],
-      ...(ephemeral ? { flags: MessageFlags.Ephemeral } : {}),
+      ...(ephemeral ? { ephemeral: true } : {}),
       allowedMentions: { parse: [] },
     });
 

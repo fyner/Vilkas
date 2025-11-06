@@ -1,6 +1,7 @@
-const { SlashCommandBuilder, MessageFlags, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { getCommandSettings } = require('../utils/settings');
 const { safeReply, safeDefer, deleteReplySafe } = require('../utils/responses');
+const { buildEmbedFromJson } = require('../utils/embed');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -54,7 +55,7 @@ module.exports = {
       if (!isTextFile) {
         await safeReply(interaction, {
           content: '❌ Failas turi būti .txt arba .json formato.',
-          flags: MessageFlags.Ephemeral,
+          ephemeral: true,
         });
         return;
       }
@@ -63,7 +64,7 @@ module.exports = {
       if (attachment.size > 1024 * 1024) {
         await safeReply(interaction, {
           content: '❌ Failas per didelis. Maksimalus dydis: 1MB.',
-          flags: MessageFlags.Ephemeral,
+          ephemeral: true,
         });
         return;
       }
@@ -80,56 +81,15 @@ module.exports = {
         try {
           const jsonData = JSON.parse(fileContent);
           
-          // Patikriname, ar tai Discord embed struktūra
-          if (jsonData && (jsonData.title || jsonData.description || jsonData.fields || jsonData.color)) {
-            // Sukuriame embed objektą
-            const embed = new EmbedBuilder();
-            
-            if (jsonData.title) embed.setTitle(jsonData.title);
-            if (jsonData.description) embed.setDescription(jsonData.description);
-            if (jsonData.color) embed.setColor(jsonData.color);
-            if (jsonData.url) embed.setURL(jsonData.url);
-            if (jsonData.timestamp) embed.setTimestamp(jsonData.timestamp);
-            
-            if (jsonData.author) {
-              embed.setAuthor({
-                name: jsonData.author.name,
-                iconURL: jsonData.author.icon_url || jsonData.author.iconURL,
-                url: jsonData.author.url,
-              });
-            }
-            
-            if (jsonData.thumbnail) {
-              embed.setThumbnail(jsonData.thumbnail.url);
-            }
-            
-            if (jsonData.image) {
-              embed.setImage(jsonData.image.url);
-            }
-            
-            if (jsonData.fields && Array.isArray(jsonData.fields)) {
-              for (const field of jsonData.fields) {
-                if (field.name && field.value) {
-                  embed.addFields({
-                    name: field.name,
-                    value: field.value,
-                    inline: field.inline || false,
-                  });
-                }
-              }
-            }
-            
-            if (jsonData.footer) {
-              embed.setFooter({
-                text: jsonData.footer.text,
-                iconURL: jsonData.footer.icon_url || jsonData.footer.iconURL,
-              });
-            }
-            
+          // Patikriname, ar tai Discord embed struktūra (nevertiname vien tik "description")
+          if (jsonData && (jsonData.title || jsonData.fields || jsonData.color || jsonData.author || jsonData.thumbnail || jsonData.image || jsonData.footer)) {
+            // Normalizuojame ir ribojame pagal Discord embed taisykles
+            const embed = buildEmbedFromJson(jsonData);
+
             // Naudojame embed'ą
             const messageOptions = {
               embeds: [embed],
-              ...(ephemeral ? { flags: MessageFlags.Ephemeral } : {}),
+              ...(ephemeral ? { ephemeral: true } : {}),
               allowedMentions: { parse: [] },
             };
 
@@ -146,7 +106,7 @@ module.exports = {
                 setTimeout(() => { try { sent.delete(); } catch (_) {} }, timeoutMs);
               }
             } else {
-              await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+              await safeDefer(interaction, { ephemeral: true });
               await safeReply(interaction, messageOptions);
               
               if (timeoutMs > 0) {
@@ -166,7 +126,7 @@ module.exports = {
       } catch (error) {
         await safeReply(interaction, {
           content: '❌ Nepavyko nuskaityti failo. Patikrinkite, ar failas yra prieinamas.',
-          flags: MessageFlags.Ephemeral,
+          ephemeral: true,
         });
         return;
       }
@@ -176,7 +136,7 @@ module.exports = {
     if (!message || message.length === 0) {
       await safeReply(interaction, {
         content: '❌ Tekstas negali būti tuščias.',
-        flags: MessageFlags.Ephemeral,
+        ephemeral: true,
       });
       return;
     }
@@ -215,10 +175,11 @@ module.exports = {
     }
 
     // Ephemeral atvejui: naudojame defer ir safeReply (kaip kitos komandos)
-    await safeDefer(interaction, { flags: MessageFlags.Ephemeral });
+    await safeDefer(interaction, { ephemeral: true });
     await safeReply(interaction, {
       content: message,
-      flags: MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds,
+      ephemeral: true,
+      flags: MessageFlags.SuppressEmbeds,
       allowedMentions: { parse: [], users: [], roles: [], repliedUser: false },
       embeds: [],
       components: [],
