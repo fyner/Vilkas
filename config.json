@@ -1,0 +1,184 @@
+{
+  "commands": {
+    "ping": { "ephemeral": true, "timeoutSeconds": 30 },
+    "echo": { "ephemeral": false, "timeoutSeconds": 0 },
+    "purge": { "ephemeral": true, "timeoutSeconds": 30 },
+    "serverinfo": { "ephemeral": true, "timeoutSeconds": 30 },
+    "userinfo": { "ephemeral": true, "timeoutSeconds": 30 },
+    "roleinfo": { "ephemeral": true, "timeoutSeconds": 30 },
+    "help": { "ephemeral": true, "timeoutSeconds": 0 },
+    "rules": {}
+  },
+  "rules": {
+    "roleId": "1435218176634912881",
+    "kickOnReject": true,
+    "welcomeChannelId": "1433215060767146094",
+    "welcomeMessageTimeoutSeconds": 30,
+    "welcomeEmbed": {
+      "color": "0x57F287",
+      "title": "👋 Sveiki prisijungę!",
+      "description": "{member}, jums buvo suteikta rolė {role}"
+    },
+    "buttons": {
+      "acceptLabel": "Sutinku",
+      "rejectLabel": "Nenoriu"
+    }
+  },
+  "embeds": {
+    "defaultColor": "0x2b2d31"
+  },
+  "roleinfo": {
+    "maxFileSizeMB": 20
+  },
+  "echo": {
+    "maxFileSizeMB": 1
+  },
+  "limits": {
+    "bulkDeleteMaxMessages": 100,
+    "bulkDeleteMaxAgeDays": 14,
+    "messageFetchLimit": 100
+  },
+  "system": {
+    "console": {
+      "configLoadError": "❌ Nepavyko nuskaityti config.json failo. Įsitikinkite, kad failas egzistuoja ir yra teisingo formato.",
+      "tokenMissing": "❌ Nenurodytas Discord boto tokenas. Atnaujinkite .env arba config.json.",
+      "clientIdMissing": "❌ Trūksta programėlės (client) ID. Papildykite .env failą arba config.json.",
+      "commandLoaded": "✅ Įkelta komanda: {name}",
+      "commandMissingExport": "⚠️ Komandos faile {file} trūksta būtino \"data\" arba \"execute\" eksporto.",
+      "botReady": "🤖 Prisijungta kaip {tag}",
+      "commandNotFound": "❔ Komanda {name} nerasta.",
+      "interactionError": "💥 Klaida InteractionCreate metu:",
+      "welcomeSendError": "Klaida siunčiant žinutę į welcome kanalą:",
+      "welcomeDeleteError": "Klaida trinant welcome žinutę:",
+      "clearCommandsStart": "🔄 Išvalau visas komandas...",
+      "clearCommandsGlobalSuccess": "✅ Išvalytos globalios komandos.",
+      "clearCommandsGlobalError": "⚠️ Nepavyko išvalyti globalių komandų:",
+      "clearCommandsGuildSuccess": "✅ Išvalytos gildijos komandos ({guildId}).",
+      "clearCommandsGuildError": "⚠️ Nepavyko išvalyti gildijos komandų:",
+      "clearCommandsComplete": "✅ Visos komandos išvalytos. Dabar paleiskite \"npm run deploy:commands\" kad vėl užregistruotumėte komandas.",
+      "clearCommandsError": "❌ Klaida išvalant komandas:",
+      "deployCommandsNoCommands": "⚠️ Nerasta komandų registracijai. Įsitikinkite, kad aplanke \"commands\" yra .js failų.",
+      "deployCommandsFileSkipped": "⚠️ Komandos failas {file} praleidžiamas dėl netinkamo eksporto.",
+      "deployCommandsGuildStart": "🔄 Registruojamos {count} komandos (tik gildijoje: {guildId})...",
+      "deployCommandsGuildSuccess": "✅ Gildijos komandų registracija baigta.",
+      "deployCommandsGlobalStart": "🔄 Registruojamos {count} komandos (globaliai)...",
+      "deployCommandsGlobalSuccess": "✅ Globali registracija baigta. Globalių komandų atnaujinimas gali užtrukti iki 1 valandos.",
+      "deployCommandsError": "❌ Klaida registruojant komandas:",
+      "permissionsCheckError": "Klaida tikrinant leidimus:",
+      "roleinfoHtmlError": "Klaida generuojant HTML:",
+      "roleinfoZipError": "Klaida kuriant ZIP failą:",
+      "roleinfoError": "Klaida generuojant roleinfo:"
+    },
+    "messages": {
+      "configMissing": "❌ Trūksta konfigūracijos: {key}",
+      "welcomeChannelLink": "\n\n**📍 Prašome eiti į:** {channel}",
+      "roleFallback": "rolė",
+      "welcomeTitleFallback": "👋 Sveiki prisijungę!"
+    }
+  },
+  "messages": {
+    "rules": {
+      "errors": {
+        "roleIdNotSet": "⚠️ **Konfigūracijos klaida**\n\nRolės ID nėra nustatytas `config.json` faile.\n\n**Sprendimas:**\n• Atidarykite `config.json` failą\n• Nustatykite `rules.roleId` reikšmę\n• Įdėkite teisingą rolės ID",
+        "internal": "🔴 **Sistemos klaida**\n\nĮvyko vidaus klaida apdorojant užklausą.\n\n**Galimos priežastys:**\n• Serverio informacija nėra pilnai užkrauta\n• Laikinas Discord API sutrikimas\n\n**Sprendimas:**\n• Palaukite kelias sekundes ir bandykite dar kartą",
+        "ownerRole": "🚫 **Operacijos atsisakymas**\n\nNegalima priskirti rolės **serverio savininkui**.\n\nServerio savininkas automatiškai turi visas teises ir nereikia papildomų rolių.",
+        "botPermission": "🔐 **Trūksta leidimų**\n\nBotas neturi reikalingo leidimo **\"Manage Roles\"**.\n\n**Sprendimas:**\n• Eikite į **Serverio nustatymai → Roles**\n• Raskite boto rolę\n• Įjunkite leidimą **\"Manage Roles\"**",
+        "roleNotFound": "🔍 **Rolė nerasta**\n\nNurodyta rolė nerasta šiame serveryje.\n\n**Patikrinkite:**\n• Ar rolės ID `config.json` faile yra teisingas\n• Ar rolė dar egzistuoja serveryje\n• Ar rolė nebuvo pašalinta",
+        "roleNotEditable": "⬆️ **Hierarchijos problema**\n\nNegalima priskirti šios rolės, nes jos pozicija yra **aukščiau** už boto aukščiausią rolę.\n\n**Sprendimas:**\n• Eikite į **Serverio nustatymai → Roles**\n• Perkelkite boto rolę **aukščiau** nei tikslinė rolė",
+        "memberHierarchy": "⬆️ **Hierarchijos problema**\n\nNegalima priskirti rolės šiam nariui, nes boto aukščiausia rolė yra **žemiau** arba **lygi** nario aukščiausiai rolei.\n\n**Sprendimas:**\n• Eikite į **Serverio nustatymai → Roles**\n• Perkelkite boto rolę **aukščiau** serverio nustatymuose",
+        "configMissing": "⚙️ **Trūksta konfigūracijos**\n\nTrūksta reikalingo nustatymo: `{key}`\n\n**Sprendimas:**\n• Atidarykite `config.json` failą\n• Pridėkite trūkstamą nustatymą",
+        "permission50013": "🔐 **Leidimų klaida**\n\nBotas neturi leidimų priskirti šią rolę.\n\n**Patikrinkite:**\n• Ar boto rolė turi leidimą **\"Manage Roles\"**\n• Ar boto rolė yra **aukščiau** nei tikslinė rolė hierarchijoje\n• Ar kanalo nustatymuose nėra apribojimų",
+        "roleAssign": "❌ **Rolės priskyrimo klaida**\n\nNepavyko priskirti rolės.\n\n**Galimos priežastys:**\n• Trūksta leidimų\n• Hierarchijos problema\n• Rolė buvo pašalinta arba pakeista\n\n**Sprendimas:**\n• Patikrinkite serverio nustatymus\n• Bandykite dar kartą",
+        "kickMember": "🚫 **Nario pašalinimo klaida**\n\nNegalima pašalinti šio nario iš serverio.\n\n**Galimos priežastys:**\n• Botas neturi leidimo **\"Kick Members\"**\n• Nario rolė yra **aukščiau** už boto rolę hierarchijoje\n• Narys yra **serverio savininkas**",
+        "generic": "⚠️ **Įvyko klaida**\n\nApdorojant jūsų užklausą įvyko netikėta klaida.\n\n**Sprendimas:**\n• Bandykite dar kartą po kelių sekundžių\n• Jei problema kartojasi, susisiekite su serverio administratoriumi",
+        "fileNotJson": "📄 **Netinkamas failo formatas**\n\nĮkeltas failas turi būti **JSON** formato (`.json` plėtinys).\n\n**Sprendimas:**\n• Patikrinkite failo plėtinį\n• Konvertuokite failą į JSON formatą\n• Bandykite dar kartą",
+        "jsonReadError": "📖 **Failo skaitymo klaida**\n\nNepavyko nuskaityti JSON failo.\n\n**Patikrinkite:**\n• Ar failas yra teisingo formato\n• Ar failas nėra sugadintas\n• Ar turite prieigą prie failo",
+        "jsonInvalidStructure": "📋 **Netinkama struktūra**\n\nJSON failas neatitinka Discord embed struktūros.\n\n**Failas turi turėti bent vieną iš šių laukų:**\n• `title`\n• `fields`\n• `color`\n• `author`\n• `thumbnail`\n• `image`\n• `footer`",
+        "sendError": "📤 **Siuntimo klaida**\n\nNepavyko išsiųsti taisyklių žinutės į šį kanalą.\n\n**Patikrinkite:**\n• Ar botas turi leidimą **\"Send Messages\"** šiame kanale\n• Ar kanalas nėra užrakintas\n• Ar nėra rate limitų"
+      },
+      "success": {
+        "roleAssigned": "✅ **Rolė sėkmingai priskirta!**\n\nSveiki prisijungę prie serverio! Jums buvo suteikta rolė pagal serverio taisykles.\n\nDabar galite naudotis **visomis** serverio funkcijomis. Linkime malonaus laiko! 🎉",
+        "welcomeMessage": "👋 Sveiki, {member}!\n\nJums buvo suteikta rolė pagal serverio taisykles. Dabar galite naudotis visomis serverio funkcijomis. Linkime malonaus laiko!",
+        "rejectMessage": "👋 **Atsisakymas**\n\nJūs atsisakėte sutikti su serverio taisyklėmis.\n\nDėl šios priežasties būsite pašalinti iš serverio."
+      },
+      "system": {
+        "auditLogReason": "Sutiko su taisyklėmis",
+        "kickReason": "Atsisakė taisyklių (rules_reject)",
+        "rejectDisabled": "ℹ️ **Mygtukas išjungtas**\n\n**\"Nenoriu\"** mygtukas šiuo metu išjungtas.\n\nJei norite atsisakyti taisyklių, susisiekite su serverio administratoriumi."
+      }
+    },
+    "purge": {
+      "errors": {
+        "notTextChannel": "📝 **Netinkamas kanalo tipas**\n\nŠioje vietoje negalima trinti žinučių.\n\n**Komanda veikia tik tekstiniuose kanaluose.**",
+        "noPermission": "🔐 **Trūksta leidimo**\n\nBotas neturi reikalingo leidimo **\"Manage Messages\"** šiame kanale.\n\n**Sprendimas:**\n• Eikite į **Serverio nustatymai → Roles**\n• Raskite boto rolę\n• Įjunkite leidimą **\"Manage Messages\"**",
+        "notGuildText": "🏠 **Netinkamas kanalo tipas**\n\nŠią operaciją galima atlikti tik **gildijos (serverio) tekstiniuose** kanaluose.\n\nPrivatūs kanalai arba DM nėra palaikomi.",
+        "deleteFailed": "❌ **Trynimo klaida**\n\nNepavyko ištrinti žinučių.\n\n**Galimos priežastys:**\n• Trūksta leidimų\n• Žinutės yra per senos (virš **14 dienų**)\n• Kanalas buvo užrakintas arba pakeistas"
+      },
+      "results": {
+        "amount": "🧹 **Trynimo rezultatas**\n\n**Ištrinta:** `{deleted}` žinučių\n**Neistrinta:** `{notDeleted}` žinučių\n\n*Pastaba: Žinutės, senesnės nei 14 dienų, negali būti ištrintos per bulk delete.*",
+        "all": "🧹 **Trynimo rezultatas**\n\nSėkmingai ištrinta **`{deleted}`** žinučių iš šio kanalo.\n\n*Pastaba: Žinutės, senesnės nei 14 dienų, gali būti neištrintos dėl Discord API apribojimų.*",
+        "none": "ℹ️ **Nerasta žinučių**\n\nŠiame kanale nerasta žinučių, kurias būtų galima ištrinti.\n\n**Galimos priežastys:**\n• Kanalas gali būti tuščias\n• Visos žinutės yra per senos (virš **14 dienų**)"
+      }
+    },
+    "roleinfo": {
+      "errors": {
+        "notGuild": "🏠 **Netinkama vieta**\n\nŠi komanda veikia tik **gildijose (serveriuose)**.\n\nPrivatūs kanalai arba DM nėra palaikomi.",
+        "htmlGeneration": "🔧 **HTML generavimo klaida**\n\nĮvyko klaida generuojant HTML ataskaitą:\n```\n{error}\n```\n\n**Sprendimas:**\n• Bandykite dar kartą\n• Sumažinkite rolių/kanalų skaičių",
+        "zipCreation": "📦 **ZIP kūrimo klaida**\n\nĮvyko klaida kuriant ZIP archyvą:\n```\n{error}\n```\n\n**Sprendimas:**\n• Bandykite dar kartą po kelių sekundžių",
+        "htmlFile": "📄 **Failo generavimo klaida**\n\nĮvyko klaida generuojant HTML failą:\n```\n{error}\n```\n\n**Sprendimas:**\n• Bandykite dar kartą\n• Susisiekite su administratoriumi",
+        "fileTooLarge": "📏 **Failas per didelis**\n\nSugeneruotas failas viršija maksimalų leistiną dydį.\n\n**Sprendimas:**\n• Sumažinkite rolių skaičių (filtruokite konkrečias roles)\n• Sumažinkite kanalų skaičių\n• Arba padidinkite `roleinfo.maxFileSizeMB` reikšmę `config.json` faile"
+      },
+      "success": {
+        "reportGeneratedSingle": "✅ **Ataskaita sugeneruota**\n\nSėkmingai sugeneruota HTML ataskaita **{role}** rolei.\n\n📎 Failas pridedamas žemiau. Atsisiųskite ir atidarykite naršyklėje, kad peržiūrėtumėte visą informaciją.",
+        "reportGeneratedAll": "✅ **Ataskaita sugeneruota**\n\nSėkmingai sugeneruota HTML ataskaita **__visoms__** serverio rolėms.\n\n📎 Failas pridedamas žemiau. Atsisiųskite ir atidarykite naršyklėje, kad peržiūrėtumėte visą informaciją."
+      },
+      "html": {
+        "labels": {
+          "members": "Narių",
+          "channels": "Kanalų",
+          "roles": "Rolių",
+          "globalPermissions": "Globalūs leidimai",
+          "channelPermissions": "Kanalų leidimai"
+        },
+        "badges": {
+          "members": "narių",
+          "permissions": "leidimai"
+        },
+        "empty": {
+          "noGlobalPermissions": "Nėra globalių leidimų",
+          "noChannelPermissions": "Nėra kanalo specifinių leidimų"
+        },
+        "misc": {
+          "denied": "(uždrausta)",
+          "error": "Klaida:",
+          "channels": "kanalai",
+          "roles": "rolės"
+        }
+      }
+    },
+    "serverinfo": {
+      "errors": {
+        "notGuild": "🏠 **Netinkama vieta**\n\nŠi komanda veikia tik **gildijose (serveriuose)**.\n\nPrivatūs kanalai arba DM nėra palaikomi."
+      },
+      "footer": "📊 Serverio informacija"
+    },
+    "userinfo": {
+      "footer": "👤 Vartotojo informacija"
+    },
+    "help": {
+      "title": "📚 Komandos",
+      "description": "Visos prieinamos komandos su parametrais ir aprašymais.\n\nNaudokite `/komanda` formatą, kad iškviestumėte komandą."
+    },
+    "echo": {
+      "errors": {
+        "fileFormat": "📄 **Netinkamas failo formatas**\n\nĮkeltas failas turi būti **`.txt`** arba **`.json`** formato.\n\n**Sprendimas:**\n• Patikrinkite failo plėtinį\n• Konvertuokite failą į palaikomą formatą\n• Bandykite dar kartą",
+        "fileTooLarge": "📏 **Failas per didelis**\n\nĮkeltas failas viršija maksimalų leistiną dydį **{size} MB**.\n\n**Sprendimas:**\n• Sumažinkite failo dydį\n• Arba naudokite kitą failą",
+        "fileRead": "📖 **Failo skaitymo klaida**\n\nNepavyko nuskaityti failo.\n\n**Patikrinkite:**\n• Ar failas yra prieinamas\n• Ar failas nėra sugadintas\n• Ar turite tinkamas teises",
+        "emptyText": "📝 **Tuščias tekstas**\n\nĮvestas tekstas negali būti tuščias.\n\n**Sprendimas:**\n• Įveskite tekstą, kurį norite, kad botas pakartotų"
+      }
+    },
+    "ping": {
+      "response": "🏓 **Pong!**\n\n**Komandos apdorojimas:** `{elapsed}ms`\n**WebSocket ping:** `{heartbeat}ms`"
+    }
+  }
+}
